@@ -1,0 +1,84 @@
+﻿@using QuanLyVanPhongPham.Models
+@model NguoiDung
+
+
+@{
+    Layout = null;
+    ViewBag.Title = "DangNhap";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Dang Nhap</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .container {
+        width: 450px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius:10px;
+    }
+
+    .btn{
+        width:100%
+    }
+</style>
+<body>
+    <div class="container bg-info p-5 border">
+        @using (Html.BeginForm("DangNhap", "DN", FormMethod.Post))
+        {
+            <h1 style="text-align:center">Đăng Nhập</h1>
+            <div class="mb-3 mt-3">
+                @Html.LabelFor(m => m.TenTaiKhoan, "Tên Tài Khoản", new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.TenTaiKhoan, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TenTaiKhoan, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3 mt-3">
+                @Html.LabelFor(m => m.MatKhau, "Mật khẩu", new { @class = "form-label" })
+                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Hiển thị thông báo lỗi tổng quát ở dưới cùng -->
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <button type="submit" class="btn btn-primary mt-3 mb-3">Đăng nhập</button>
+
+            <p style="text-align: center">Quên @Html.ActionLink("Mật khẩu", "QuenMatKhau", "DN")</p>
+            <p style="text-align: center">Bạn chưa có tài khoản? @Html.ActionLink("Đăng ký tại đây", "DangKy", "DN")</p>
+
+        }
+    </div>
+
+    
+
+    <!-- Pop-up thông báo -->
+    @if (ViewBag.LoginSuccess != null && ViewBag.LoginSuccess == true)
+    {
+        <script type="text/javascript">
+        // Hiển thị thông báo đăng nhập thành công
+        alert("Đăng nhập thành công!");
+
+        // Tự động chuyển hướng sau 1 giây
+        setTimeout(function () {
+            window.location.href = '@Url.Action("ShowSanPham", "SanPham")';
+        }, 1000);
+        </script>
+    }
+</body>
+</html>

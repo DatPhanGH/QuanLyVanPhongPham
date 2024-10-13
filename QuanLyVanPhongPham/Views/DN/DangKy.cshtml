@@ -1,0 +1,136 @@
+﻿@using QuanLyVanPhongPham.Models
+@model NguoiDung
+@{
+    Layout = null;
+    ViewBag.Title = "DangKy";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Đăng Ký</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+
+<style>
+    .card-body {
+        width: 450px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+    }
+
+    .input-group{
+        margin:10px 0 10px 0;
+    }
+
+    .btn{
+        margin:10px 0 10px 0;
+        width:100%;
+    }
+
+    li{
+        list-style-type:none;
+    }
+
+</style>
+
+<body>
+    <article class="card-body mx-auto p-5 bg-info">
+        <h4 class="card-title mt-3 mb-3 text-center">Đăng Ký Tài Khoản</h4>
+
+        @using (Html.BeginForm("DangKy", "DN", FormMethod.Post))
+        {
+            <div class="form-group input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i>  </span>
+                @Html.TextBoxFor(m => m.TenTaiKhoan, new { @class = "form-control", placeholder = "Tên tài khoản" })
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Họ tên" })
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
+                @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Địa chỉ" })
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = "Số điện thoại" })
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fas fa-key"></i> </span>
+                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Mật khẩu", id = "passwordInput" })
+                <span id="togglePassword" style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                    <i class="fa fa-eye" id="eyeIcon"></i>
+                </span>
+            </div>
+
+            <div class="form-group input-group">
+                <span class="input-group-text"> <i class="fas fa-check"></i> </span>
+                <input type="password" , class="form-control" , placeholder="Xác nhận mật khẩu" , id="passwordInput" , name="xacnhaMK" />
+
+                <span id="togglePassword" style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                    <i class="fa fa-eye" id="eyeIcon"></i>
+                </span>
+            </div>
+
+            <!-- Hiển thị thông báo lỗi tổng quát ở dưới cùng -->
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Đăng Ký </button>
+            </div>
+
+            <p class="text-center">Bạn đã có tài khoản? <a href="">Đăng Nhập</a> </p>
+        }
+    </article>
+
+    <!-- Pop-up thông báo -->
+    @if (ViewBag.SignUpSuccess != null && ViewBag.SignUpSuccess == true)
+     {
+        <script type="text/javascript">
+            // Hiển thị thông báo đăng ký thành công
+            alert("Đăng ký thành công!");
+            // Tự động chuyển hướng sau 1 giây
+            setTimeout(function () {
+            window.location.href = '@Url.Action("DangNhap", "DN")';
+            }, 1000);
+        </script>
+     }
+</body>
+
+<script>
+
+    //hiện password 
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        // Kiểm tra trạng thái mật khẩu
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    });
+</script>
+
+
+</html>
+
